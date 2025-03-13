@@ -6,6 +6,7 @@ Configuration:
 * Turn on File -> Autosave
 Commands:  
 * `npm i @playwright/test@next`
+* `npm install --save-dev --save-exact prettier`
 
 
 Commands:
