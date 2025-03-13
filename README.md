@@ -3,7 +3,8 @@ Automation Tests for the My Prestashop
 
 Configuration:
 * Install the Playwright Test for VSCode extension
-    `npm i @playwright/test@next`
+Commands:  
+* `npm i @playwright/test@next`
 
 
 Commands:
