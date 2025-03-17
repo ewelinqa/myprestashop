@@ -13,9 +13,13 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*
+        cache: npm
+        registry-url: 'https://npm.pkd.github.com'
     - name: Install dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
       run: npm ci
     - name: Install Playwright Browsers
+      if: steps.cache.outputs.cache-hit != 'true'
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
