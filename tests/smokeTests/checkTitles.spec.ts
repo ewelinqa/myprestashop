@@ -7,6 +7,7 @@ test.beforeEach(async ({ page }) => {
   await basePage.goTo();
 });
 
+
 test('Check the Home Page title', async ({ page }) => {
   await expect(page).toHaveTitle(PageTitles.HomePageTitle);
 });
