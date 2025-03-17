@@ -15,11 +15,28 @@ jobs:
         node-version: lts/*
         cache: npm
         registry-url: 'https://npm.pkd.github.com'
+    - name: Get installed Playwright version
+      id: playwright-version
+      run: echo "PLAYWRIGHT_VERSION=$(nODE -e "console.log(require('./package-lock.json').packages['node_modules/@playwright/test'].version)")" >> $GITHUB_ENV
+    - name: Cache playwright binaries
+      uses: actions/cache@v3
+      id: playwright-cache
+      with:
+        patch: |
+          ~/.cache/ms-playwright
+        key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+    - name: Cache node_modules
+      uses: actions/cache@v3
+      id: node-cache
+      with:
+        path: |
+          node_modules
+        key: node_modules-${{ hashFiles('package-lock.json') }}
     - name: Install dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.node-cache.outputs.cache-hit != 'true'
       run: npm ci
     - name: Install Playwright Browsers
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.playwright-cache.outputs.cache-hit != 'true'
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
