@@ -38,6 +38,4 @@ jobs:
           steps: ${{ toJson(steps) }}
           channel: '#workflows'
           config: notifications/slack.yml
-          message: |
-            Allure report: ${{ env.ALLURE_REPORT_URL }}
         if: always()
