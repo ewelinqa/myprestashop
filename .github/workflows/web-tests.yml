@@ -6,6 +6,7 @@ on:
       testNames:
         description: 'Names of the tests to run (use | to separate multiple names)'
         required: false
+  
 
 permissions:
   contents: write
@@ -32,4 +33,5 @@ jobs:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
           channel: '#workflows'
+          config: .github/config/slack.yml
         if: always()
