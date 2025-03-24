@@ -29,7 +29,6 @@ jobs:
     steps:
       - uses: act10ns/slack@v2
         env:
-          BASE_URL: ${{ secrets.BASE_URL }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_WEB_TESTS }}
           GITHUB_RUN_URL: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
           ALLURE_REPORT_URL: ${{ needs.call-common-workflow.outputs.REPORT_URL }}

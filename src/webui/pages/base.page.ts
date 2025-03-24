@@ -5,6 +5,7 @@ export class BasePage {
   constructor(protected page: Page) {}
 
   async goTo(): Promise<void> {
+    console.log('Navigating to:', this.url);
     await this.page.goto(this.url);
   }
 
