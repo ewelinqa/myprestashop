@@ -1,12 +1,26 @@
 import { PageTitles } from '../../src/enums/titles.enums';
-import { BasePage } from '../../src/pages/base.page';
+import { HeaderComponent } from '../../src/webui/components/header.component';
+import { BasePage } from '../../src/webui/pages/base.page';
 import { expect, test } from '@playwright/test';
+import * as allure from 'allure-js-commons';
 
 test.beforeEach(async ({ page }) => {
   const basePage = new BasePage(page);
   await basePage.goTo();
 });
 
-test('Check the Home Page title', async ({ page }) => {
-  await expect(page).toHaveTitle(PageTitles.HomePageTitle);
+test('Check the Home Page title', { tag: '@smoke' }, async ({ page }) => {
+  await allure.link('PRESTASHOP-1', 'Test case: PRESTASHOP-1', 'testCase');
+  await allure.severity(allure.Severity.BLOCKER);
+
+  await expect(page).toHaveTitle(PageTitles.HOME_PAGE);
+});
+
+test('Check the Contact Us Page title', { tag: '@smoke' }, async ({ page }) => {
+  await allure.link('PRESTASHOP-2', 'Test case: PRESTASHOP-2', 'testCase');
+  await allure.severity(allure.Severity.BLOCKER);
+
+  const headerComponent = new HeaderComponent(page);
+  await headerComponent.contactUsLink.click();
+  await expect(page).toHaveTitle(PageTitles.CONTACT_US_PAGE);
 });
