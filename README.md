@@ -27,3 +27,5 @@ Commands:
 Links:
 
 - https://www.conventionalcommits.org/en/v1.0.0/
+- https://github.com/marketplace/actions/slack-github-actions-slack-integration
+- https://api.slack.com/apps

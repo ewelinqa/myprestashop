@@ -13,10 +13,6 @@ on:
       TEST_NAMES:
         required: false
         type: string
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
 jobs:
   run-tests:
     timeout-minutes: 60
