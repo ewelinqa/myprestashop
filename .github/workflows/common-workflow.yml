@@ -77,7 +77,7 @@ jobs:
 
       - name: Run Playwright tests
         id: run-tests
-        run: ${{inputs}}
+        run: ${{inputs.run_script}}
 
       - name: Archive tests results
         if: success() || failure()

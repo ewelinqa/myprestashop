@@ -34,4 +34,8 @@ jobs:
           steps: ${{ toJson(steps) }}
           channel: '#workflows'
           config: .github/config/slack.yml
+          message: |
+            *<${{ env.GITHUB_RUN_URL }}|${{ github.workflow }} job ${{ job.status }}>* for ${{ github.repository }}@${{ github.sha }}
+            Allure report: ${{ env.ALLURE_REPORT_URL }}
+            ${{ toJson(needs.call-common-workflow.outputs) }}
         if: always()
