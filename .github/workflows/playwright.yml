@@ -70,12 +70,6 @@ jobs:
           name: test-report
           path: 'playwright-report/*.*'
 
-      - name: Publish Test Report
-        uses: mikepenz/action-junit-report@v4
-        if: success() || failure()
-        with:
-          report_paths: './playwright-report/results.xml'
-
       - name: Checkout gh-pages
         uses: actions/checkout@v3
         if: always()
@@ -108,35 +102,6 @@ jobs:
           branch: gh-pages
           pull_args: --rebase -X ours
 
-      - name: Archive tests results
-        if: success() || failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-report
-          path: 'playwright-report/*.*'
-
-      - name: Publish Test Report
-        uses: mikepenz/action-junit-report@v4
-        if: success() || failure()
-        with:
-          report_paths: './playwright-report/results.xml'
-
-      - name: Checkout gh-pages
-        uses: actions/checkout@v3
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages-dir
-
-      - name: Git Commit and Push Action
-        uses: mgrybyk-org/git-commit-pull-push-action@v1
-        if: always()
-        with:
-          repository: gh-pages-dir
-          branch: gh-pages
-          pull_args: --rebase -X ours
-          
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
