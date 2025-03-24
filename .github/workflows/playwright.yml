@@ -17,9 +17,11 @@ jobs:
           node-version: lts/*
           cache: npm
           registry-url: 'https://registry.npmjs.org/'
+
       - name: Get installed Playwright version
         id: playwright-version
         run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').packages['node_modules/@playwright/test'].version)")" >> $GITHUB_ENV
+      
       - name: Cache playwright binaries
         uses: actions/cache@v3
         id: playwright-cache
@@ -27,6 +29,7 @@ jobs:
           path: |
             ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+
       - name: Cache node_modules
         uses: actions/cache@v3
         id: node-cache
@@ -34,16 +37,106 @@ jobs:
           path: |
             node_modules
           key: node_modules-${{ hashFiles('package-lock.json') }}
+
       - name: Update npm to the latest version
         run: npm install -g npm@latest
+
       - name: Install dependencies
         if: steps.node-cache.outputs.cache-hit != 'true'
         run: npm ci
+
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
+
+      - name: Install JDK
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openjdk-11-jdk
+
+      - name: Set JAVA_HOME
+        run: echo "JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))" >> $GITHUB_ENV
+
+      - name: Check Java version
+        run: java -version
+
       - name: Run Playwright tests
         run: npx playwright test
+
+      - name: Archive tests results
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: 'playwright-report/*.*'
+
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v4
+        if: success() || failure()
+        with:
+          report_paths: './playwright-report/results.xml'
+
+      - name: Checkout gh-pages
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages-dir
+
+      - name: Allure Report Action
+        uses: mgrybyk-org/allure-report-branch-js-action@v1.4.5
+        if: always()
+        continue-on-error: true
+        id: allure
+        with:
+          report_id: ${{ github.workflow }}
+          gh_pages: 'gh-pages-dir'
+          report_dir: 'allure-results'
+          max_reports: 15
+
+      - name: Set Allure Report URL as Output
+        if: always()
+        id: set-allure-output
+        run: echo "REPORT_URL=${{ steps.allure.outputs.REPORT_URL }}" >> $GITHUB_OUTPUT
+
+      - name: Git Commit and Push Action
+        uses: mgrybyk-org/git-commit-pull-push-action@v1
+        if: always()
+        with:
+          repository: gh-pages-dir
+          branch: gh-pages
+          pull_args: --rebase -X ours
+
+      - name: Archive tests results
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: 'playwright-report/*.*'
+
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v4
+        if: success() || failure()
+        with:
+          report_paths: './playwright-report/results.xml'
+
+      - name: Checkout gh-pages
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages-dir
+
+      - name: Git Commit and Push Action
+        uses: mgrybyk-org/git-commit-pull-push-action@v1
+        if: always()
+        with:
+          repository: gh-pages-dir
+          branch: gh-pages
+          pull_args: --rebase -X ours
+          
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
