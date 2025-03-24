@@ -47,7 +47,7 @@ message:
       value: "<{{env.ALLURE_REPORT_URL}}|View Report>"
       short: false
 
-  footer: "<{{repositoryUrl}}|{{repositoryName}}> {{workflow}} #{{runNumber}} | Allure report: <{{env.ALLURE_REPORT_URL}}|View Report>"
+  footer: "<{{repositoryUrl}}|{{repositoryName}}> {{workflow}} #{{runNumber}}|Allure report: <{{env.ALLURE_REPORT_URL}}|View Report>"
 
   colors:
     success: "#5DADE2"
