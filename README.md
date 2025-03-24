@@ -17,6 +17,8 @@ Commands:
 - `npm install eslint-plugin-prettier@latest --save-dev`
 - `npm install --save-dev @trivago/prettier-plugin-sort-imports`
 - `npm install dotenv`
+- `npm install --save-dev @playwright/test allure-playwright`
+- `npm install -g allure-commandline --save-dev`
 
 Commands:
 

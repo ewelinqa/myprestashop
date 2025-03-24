@@ -23,7 +23,22 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined, //core
   // workers: 1, //change to above if you have stronger machine
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [
+    ['html'],
+    ['allure-playwright',
+      {
+        resultsDir: 'allure-results',
+        detail: true,
+        suiteTitle: true,
+        links: {
+          testCase: {
+            urlTemplate: (v) => `https://app.qase.io/case/${v}`,
+
+          }
+        }
+      }
+    ]
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
