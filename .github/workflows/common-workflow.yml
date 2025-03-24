@@ -13,10 +13,6 @@ on:
       TEST_NAMES:
         required: false
         type: string
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
 jobs:
   run-tests:
     timeout-minutes: 60
@@ -64,7 +60,18 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
 
+      - name: Cache JDK
+        id: cache-java
+        uses: actions/cache@v3
+        with:
+          path: /usr/lib/jvm
+          key: jdk-11-${{ runner.os }}
+          restore-keys: |
+            jdk-11-${{ runner.os }}
+
+
       - name: Install JDK
+        if: steps.cache-java.outputs.cache-hit != 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y openjdk-11-jdk
@@ -77,7 +84,7 @@ jobs:
 
       - name: Run Playwright tests
         id: run-tests
-        run: ${{inputs.run_script}}
+        run: ${{ inputs.run_script }}
 
       - name: Archive tests results
         if: success() || failure()
@@ -108,7 +115,10 @@ jobs:
       - name: Set Allure Report URL as Output
         if: always()
         id: set-allure-output
-        run: echo "REPORT_URL=${{ steps.allure.outputs.REPORT_URL }}" >> $GITHUB_OUTPUT
+        run: |
+          if [[ -n "${{ steps.allure.outputs.REPORT_URL }}" ]]; then
+           echo "REPORT_URL=${{ steps.allure.outputs.REPORT_URL }}" >> $GITHUB_OUTPUT
+          fi
 
       - name: Git Commit and Push Action
         uses: mgrybyk-org/git-commit-pull-push-action@v1

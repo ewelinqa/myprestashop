@@ -6,8 +6,11 @@ on:
       testNames:
         description: 'Names of the tests to run (use | to separate multiple names)'
         required: false
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
   
-
 permissions:
   contents: write
 
@@ -16,7 +19,7 @@ jobs:
     uses: ./.github/workflows/common-workflow.yml
     with:
       run_script: |
-        npm run test:all"${{ inputs.testNames }}" 2>&1 | tee /dev/stderr
+        npm run test:all "${{ inputs.testNames }}" 2>&1 | tee /dev/stderr
       TEST_NAMES: ${{ inputs.testNames }}
 
   send-slack-notification:
@@ -28,7 +31,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_WEB_TESTS }}
           GITHUB_RUN_URL: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
-          ALLURE_REPORT_URL: ${{ needs.call-common-workflow.outputs.REPORT_URL}}
+          ALLURE_REPORT_URL: ${{ needs.call-common-workflow.outputs.REPORT_URL }}
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
