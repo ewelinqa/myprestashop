@@ -69,7 +69,6 @@ jobs:
           restore-keys: |
             jdk-11-${{ runner.os }}
 
-
       - name: Install JDK
         if: steps.cache-java.outputs.cache-hit != 'true'
         run: |
