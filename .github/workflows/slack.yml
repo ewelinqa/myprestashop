@@ -73,4 +73,4 @@ jobs:
                 }
               ]
             }
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-bot-token: ${{ secrets.SLACK_WEBHOOK_URL_WEB_TESTS }}
