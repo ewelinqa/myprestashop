@@ -1,0 +1,42 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Check the Home Page title
+- Location: /home/runner/work/myprestashop/myprestashop/tests/smokeTests/checkTitles.spec.ts:13:5
+
+# Error details
+
+```
+Error: page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL
+Call log:
+  - navigating to "/", waiting until "load"
+
+    at BasePage.goTo (/home/runner/work/myprestashop/myprestashop/src/webui/pages/base.page.ts:9:21)
+    at /home/runner/work/myprestashop/myprestashop/tests/smokeTests/checkTitles.spec.ts:10:18
+```
+
+# Test source
+
+```ts
+   1 | import { Page } from '@playwright/test';
+   2 |
+   3 | export class BasePage {
+   4 |   url = '/';
+   5 |   constructor(protected page: Page) {}
+   6 |
+   7 |   async goTo(): Promise<void> {
+   8 |     console.log('Navigating to:', this.url);
+>  9 |     await this.page.goto(this.url);
+     |                     ^ Error: page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL
+  10 |   }
+  11 |
+  12 |   async title(): Promise<string> {
+  13 |     return await this.page.title();
+  14 |   }
+  15 | }
+```
