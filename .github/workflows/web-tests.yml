@@ -1,0 +1,36 @@
+name: Web Tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      testNames:
+        description: 'Names of the tests to run (use | to separate multiple names)'
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  call-common-workflow:
+    uses: ./.github/workflows/common-workflow.yml
+    with:
+      runs_on: ubuntu-latest
+      run_script: |
+        npm run test:all"${{ inputs.testNames }}" 2>&1 | tee /dev/stderr
+      TEST_NAMES: ${{ inputs.testNames }}
+
+  send-slack-notification:
+    runs-on: ubuntu-latest
+    needs: call-common-workflow
+    if: always()
+    steps:
+      - uses: act10ns/slack@v2
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_WEB_TESTS }}
+          GITHUB_RUN_URL: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+          ALLURE_REPORT_URL: ${{ needs.call-common-workflow.outputs.REPORT_URL}}
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: '#workflows'
+        if: always()

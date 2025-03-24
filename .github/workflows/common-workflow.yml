@@ -1,13 +1,28 @@
-name: Playwright Tests
+name: Common workflow
 on:
+  workflow_call:
+    outputs:
+      REPORT_URL:
+        description: 'Allure report URL'
+        value: ${{ jobs.run-tests.outputs.REPORT_URL }}
+    inputs:
+      run_script:
+        description: 'Script to run'
+        required: true
+        type: string
+      TEST_NAMES:
+        required: false
+        type: string
   push:
     branches: [main, master]
   pull_request:
     branches: [main, master]
 jobs:
-  test:
+  run-tests:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    outputs:
+      REPORT_URL: ${{ steps.set-allure-output.outputs.REPORT_URL }}
     env:
       BASE_URL: ${{ secrets.BASE_URL }}
     steps:
@@ -61,7 +76,8 @@ jobs:
         run: java -version
 
       - name: Run Playwright tests
-        run: npx playwright test
+        id: run-tests
+        run: ${{inputs.run_script}}
 
       - name: Archive tests results
         if: success() || failure()
