@@ -36,7 +36,7 @@ jobs:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
           channel: '#workflows'
-          config: .github/config/slack.yml
+          config: notifications/slack.yml
           message: |
             Allure report: ${{ env.ALLURE_REPORT_URL }}
         if: always()
