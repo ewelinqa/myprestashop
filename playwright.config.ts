@@ -45,8 +45,7 @@ export default defineConfig({
     baseURL: process.env.BASE_URL, //baseUrl is in the .env file (.git ignore)
     // permissions: ['clipboard-read'],
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on',
-    video: 'retain-on-failure',
+    screenshot: 'only-on-failure',
     // actionTimeout: 60000,
   },
   timeout: 60000,
