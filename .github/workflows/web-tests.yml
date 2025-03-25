@@ -6,10 +6,6 @@ on:
       testNames:
         description: 'Names of the tests to run (use | to separate multiple names)'
         required: false
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
   
 permissions:
   contents: write
