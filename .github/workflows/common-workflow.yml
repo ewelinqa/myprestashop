@@ -81,6 +81,9 @@ jobs:
       - name: Check Java version
         run: java -version
 
+      - name: Debug npm config
+        run: npm config list
+
       - name: Run Playwright tests
         id: run-tests
         run: ${{ inputs.run_script }}
