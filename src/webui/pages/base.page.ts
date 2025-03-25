@@ -6,6 +6,7 @@ export class BasePage {
 
   async goTo(): Promise<void> {
     console.log('Navigating to:', this.url);
+    console.log('url:', process.env.BASE_URL);
     await this.page.goto(this.url);
   }
 
