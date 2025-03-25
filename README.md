@@ -19,6 +19,24 @@ Commands:
 - `npm install dotenv`
 - `npm install --save-dev @playwright/test allure-playwright`
 - `npm install -g allure-commandline --save-dev`
+--------------MOBILE-----------------
+- `npm install playwright appium @types/node --save-dev`
+
+- install:
+    - https://developer.android.com/tools/releases/platform-tools?hl=pl
+    - `adb version`
+    - connect device (Options for developers)
+    - `adb devices`
+    - `npm i --location=global appium` or `npm install playwright appium @types/node`
+    - `appium` - check version
+    - `appium driver install uiautomator2` - driver
+    - `npm i --save-dev webdriverio`
+    - `npm install appium webdriverio` / `npm install webdriverio @types/webdriverio --save-dev`
+    - `npx wdio --version`
+    - `npm install appium mocha chai @types/mocha @types/chai`
+    - `npm install appium@next @appium/appium`
+
+
 
 Commands:
 
