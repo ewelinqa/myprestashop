@@ -44,7 +44,7 @@ message:
       value: "{{jobStatus}}"
       short: true
     - title: "Allure Report"
-      value: "<{{env.ALLURE_REPORT_URL}}|View Report>"
+      value: "<{{env.ALLURE_REPORT_URL}}>"
       short: false
 
   footer: "<{{repositoryUrl}}|{{repositoryName}}> {{workflow}} #{{runNumber}}|Allure report: <{{env.ALLURE_REPORT_URL}}|View Report>"
