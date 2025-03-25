@@ -1,0 +1,211 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Check the Contact Us Page title
+- Location: /home/runner/work/myprestashop/myprestashop/tests/smokeTests/checkTitles.spec.ts:20:5
+
+# Error details
+
+```
+Error: locator.click: Test timeout of 60000ms exceeded.
+Call log:
+  - waiting for locator('#contact-link')
+    - locator resolved to <div id="contact-link">…</div>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 100ms
+    111 × waiting for element to be visible, enabled and stable
+        - element is not visible
+      - retrying click action
+        - waiting 500ms
+
+    at /home/runner/work/myprestashop/myprestashop/tests/smokeTests/checkTitles.spec.ts:25:39
+```
+
+# Page snapshot
+
+```yaml
+- dialog:
+  - document:
+    - heading "Add to wishlist" [level=5]
+    - button "Close"
+    - list
+    - text: add_circle_outline Create new list
+- dialog:
+  - document:
+    - heading "Create wishlist" [level=5]
+    - button "Close"
+    - text: Wishlist name
+    - textbox "Wishlist name"
+    - button "Cancel"
+    - button "Create wishlist"
+- dialog:
+  - document:
+    - heading "((modalTitle))" [level=5]
+    - button "Close"
+    - paragraph: ((confirmMessage))
+    - button "((cancelText))"
+    - button "((modalDeleteText))"
+- dialog:
+  - document:
+    - heading "Sign in" [level=5]
+    - button "Close"
+    - paragraph: You need to be logged in to save products in your wishlist.
+    - button "Cancel"
+    - link "Sign in"
+- paragraph
+- img
+- main:
+  - navigation:
+    - text:  (0)
+    - link ""
+    - heading "My prestashop" [level=1]:
+      - link "My prestashop":
+        - img "My prestashop"
+  - status
+  - textbox "Search"
+  - complementary
+  - heading "Popular Products" [level=2]
+  - article:
+    - link "Brown bear printed sweater":
+      - img "Brown bear printed sweater"
+    - link " Quick view"
+    - heading "Hummingbird printed sweater" [level=3]:
+      - link "Hummingbird printed sweater"
+    - text: $35.90 $28.72
+    - list:
+      - listitem: "-20%"
+    - button "favorite_border"
+  - article:
+    - link "The best is yet to come' Framed poster":
+      - img "The best is yet to come' Framed poster"
+    - link " Quick view"
+    - heading "The best is yet to come'..." [level=3]:
+      - link "The best is yet to come'..."
+    - text: $29.00
+    - list
+    - button "favorite_border"
+  - article:
+    - link "The adventure begins Framed poster":
+      - img "The adventure begins Framed poster"
+    - link " Quick view"
+    - heading "The adventure begins Framed..." [level=3]:
+      - link "The adventure begins Framed..."
+    - text: $29.00
+    - list
+    - button "favorite_border"
+  - article:
+    - link "Today is a good day Framed poster":
+      - img "Today is a good day Framed poster"
+    - link " Quick view"
+    - heading "Today is a good day Framed..." [level=3]:
+      - link "Today is a good day Framed..."
+    - text: $29.00
+    - list
+    - button "favorite_border"
+  - article:
+    - link "Mug The best is yet to come":
+      - img "Mug The best is yet to come"
+    - link " Quick view"
+    - heading "Mug The best is yet to come" [level=3]:
+      - link "Mug The best is yet to come"
+    - text: $11.90
+    - list
+    - button "favorite_border"
+  - article:
+    - link "Mug The adventure begins":
+      - img "Mug The adventure begins"
+    - link " Quick view"
+    - heading "Mug The adventure begins" [level=3]:
+      - link "Mug The adventure begins"
+    - text: $11.90
+    - list
+    - button "favorite_border"
+  - article:
+    - link "Mug Today is a good day":
+      - img "Mug Today is a good day"
+    - link " Quick view"
+    - heading "Mug Today is a good day" [level=3]:
+      - link "Mug Today is a good day"
+    - text: $11.90
+    - list
+    - button "favorite_border"
+  - article:
+    - link "Mountain fox cushion":
+      - img "Mountain fox cushion"
+    - link " Quick view"
+    - link "White"
+    - link "Black"
+    - heading "Mountain fox cushion" [level=3]:
+      - link "Mountain fox cushion"
+    - text: $18.90
+    - list
+    - button "favorite_border"
+  - link "All products "
+  - heading "Custom Text Block" [level=2]
+  - paragraph:
+    - strong: Lorem ipsum dolor sit amet conse ctetu
+  - paragraph: Sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.
+  - paragraph: Get our latest news and special sales
+  - button "OK"
+  - textbox "Get our latest news and special sales"
+  - paragraph: You may unsubscribe at any moment. For that purpose, please find our contact info in the legal notice.
+  - list
+  - text: Products  Our company  Your account  Store information keyboard_arrow_down
+  - paragraph:
+    - link "© 2025 - Ecommerce software by PrestaShop™"
+```
+
+# Test source
+
+```ts
+   1 | import { PageTitles } from '../../src/enums/titles.enums';
+   2 | import { HeaderComponent } from '../../src/webui/components/header.component';
+   3 | import { MainMenuComponent } from '../../src/webui/components/mainMenu.component';
+   4 | import { BasePage } from '../../src/webui/pages/base.page';
+   5 | import { expect, test } from '@playwright/test';
+   6 | import * as allure from 'allure-js-commons';
+   7 |
+   8 | test.beforeEach(async ({ page }) => {
+   9 |   const basePage = new BasePage(page);
+  10 |   await basePage.goTo();
+  11 | });
+  12 |
+  13 | test('Check the Home Page title', { tag: '@smoke' }, async ({ page }) => {
+  14 |   await allure.link('PRESTASHOP-1', 'Test case: PRESTASHOP-1', 'testCase');
+  15 |   await allure.severity(allure.Severity.BLOCKER);
+  16 |
+  17 |   await expect(page).toHaveTitle(PageTitles.HOME_PAGE);
+  18 | });
+  19 |
+  20 | test('Check the Contact Us Page title', { tag: '@smoke' }, async ({ page }) => {
+  21 |   await allure.link('PRESTASHOP-2', 'Test case: PRESTASHOP-2', 'testCase');
+  22 |   await allure.severity(allure.Severity.BLOCKER);
+  23 |
+  24 |   const headerComponent = new HeaderComponent(page);
+> 25 |   await headerComponent.contactUsLink.click();
+     |                                       ^ Error: locator.click: Test timeout of 60000ms exceeded.
+  26 |   await expect(page).toHaveTitle(PageTitles.CONTACT_US_PAGE);
+  27 | });
+  28 |
+  29 | test('Check the Clothes Page title', { tag: '@smoke' }, async ({ page }) => {
+  30 |   await allure.link('PRESTASHOP-3', 'Test case: PRESTASHOP-3', 'testCase');
+  31 |   await allure.severity(allure.Severity.BLOCKER);
+  32 |
+  33 |   const mainMenuComponent = new MainMenuComponent(page);
+  34 |   await mainMenuComponent.clothesLink.click();
+  35 |   await expect(page).toHaveTitle(PageTitles.CLOTHES_PAGE);
+  36 | });
+  37 |
+```

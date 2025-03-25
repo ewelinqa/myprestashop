@@ -1,0 +1,69 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Check the Contact Us Page title
+- Location: /home/runner/work/myprestashop/myprestashop/tests/smokeTests/checkTitles.spec.ts:20:5
+
+# Error details
+
+```
+Error: browserType.launch: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /home/runner/.cache/ms-playwright/webkit-2140/pw_run.sh --inspector-pipe --headless --no-startup-window
+<launched> pid=4606
+[pid=4606][err] /home/runner/.cache/ms-playwright/webkit-2140/minibrowser-wpe/bin/MiniBrowser: error while loading shared libraries: libwoff2dec.so.1.0.2: cannot open shared object file: No such file or directory
+Call log:
+  - <launching> /home/runner/.cache/ms-playwright/webkit-2140/pw_run.sh --inspector-pipe --headless --no-startup-window
+  - <launched> pid=4606
+  - [pid=4606][err] /home/runner/.cache/ms-playwright/webkit-2140/minibrowser-wpe/bin/MiniBrowser: error while loading shared libraries: libwoff2dec.so.1.0.2: cannot open shared object file: No such file or directory
+
+```
+
+# Test source
+
+```ts
+   1 | import { PageTitles } from '../../src/enums/titles.enums';
+   2 | import { HeaderComponent } from '../../src/webui/components/header.component';
+   3 | import { MainMenuComponent } from '../../src/webui/components/mainMenu.component';
+   4 | import { BasePage } from '../../src/webui/pages/base.page';
+   5 | import { expect, test } from '@playwright/test';
+   6 | import * as allure from 'allure-js-commons';
+   7 |
+   8 | test.beforeEach(async ({ page }) => {
+   9 |   const basePage = new BasePage(page);
+  10 |   await basePage.goTo();
+  11 | });
+  12 |
+  13 | test('Check the Home Page title', { tag: '@smoke' }, async ({ page }) => {
+  14 |   await allure.link('PRESTASHOP-1', 'Test case: PRESTASHOP-1', 'testCase');
+  15 |   await allure.severity(allure.Severity.BLOCKER);
+  16 |
+  17 |   await expect(page).toHaveTitle(PageTitles.HOME_PAGE);
+  18 | });
+  19 |
+> 20 | test('Check the Contact Us Page title', { tag: '@smoke' }, async ({ page }) => {
+     |     ^ Error: browserType.launch: Target page, context or browser has been closed
+  21 |   await allure.link('PRESTASHOP-2', 'Test case: PRESTASHOP-2', 'testCase');
+  22 |   await allure.severity(allure.Severity.BLOCKER);
+  23 |
+  24 |   const headerComponent = new HeaderComponent(page);
+  25 |   await headerComponent.contactUsLink.click();
+  26 |   await expect(page).toHaveTitle(PageTitles.CONTACT_US_PAGE);
+  27 | });
+  28 |
+  29 | test('Check the Clothes Page title', { tag: '@smoke' }, async ({ page }) => {
+  30 |   await allure.link('PRESTASHOP-3', 'Test case: PRESTASHOP-3', 'testCase');
+  31 |   await allure.severity(allure.Severity.BLOCKER);
+  32 |
+  33 |   const mainMenuComponent = new MainMenuComponent(page);
+  34 |   await mainMenuComponent.clothesLink.click();
+  35 |   await expect(page).toHaveTitle(PageTitles.CLOTHES_PAGE);
+  36 | });
+  37 |
+```
