@@ -1,0 +1,4 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","3056","Check the Contact Us Page title","chromium","Tue Mar 25 16:19:54 UTC 2025","passed","Tue Mar 25 16:19:57 UTC 2025","","smokeTests/checkTitles.spec.ts","",""
+"","3298","Check the Clothes Page title","chromium","Tue Mar 25 16:19:57 UTC 2025","passed","Tue Mar 25 16:20:00 UTC 2025","","smokeTests/checkTitles.spec.ts","",""
+"","2623","Check the Home Page title","chromium","Tue Mar 25 16:19:51 UTC 2025","passed","Tue Mar 25 16:19:54 UTC 2025","","smokeTests/checkTitles.spec.ts","",""
