@@ -12,7 +12,7 @@ message:
     \n
     For detailed results, view the <{{env.ALLURE_REPORT_URL}}|Allure Report>
 
-  fallback: '[GitHub] {{workflow}} #{{runNumber}} {{jobName}} is {{jobStatus}}'
+  fallback: 'For detailed results, view the <{{env.ALLURE_REPORT_URL}}|Allure Report>'
 
   colors:
     success: '#5DADE2'
