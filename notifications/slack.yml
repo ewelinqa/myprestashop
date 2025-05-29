@@ -3,30 +3,38 @@ message:
   icon_url: https://octodex.github.com/images/mona-the-rivetertocat.png
 
   pretext: "Triggered via {{eventName}} by {{actor}} {{or action 'action'}} {{ref}} `{{diffRef}}`"
-  title: "GitHub Actions"
-  title_link: "https://support.github.com"
+  title: 'GitHub Actions'
+  title_link: 'https://support.github.com'
 
   text: |
     *<{{workflowRunUrl}}|Workflow _{{workflow}}_ job _{{jobName}}_ triggered by _{{eventName}}_ is _{{jobStatus}}_>* for <{{refUrl}}|`{{ref}}`>
     {{#if description}}<{{diffUrl}}|`{{diffRef}}`> - {{description}}{{/if}}
 
-  fallback: "[GitHub] {{workflow}} #{{runNumber}} {{jobName}} is {{jobStatus}}"
+  fallback: '[GitHub] {{workflow}} #{{runNumber}} {{jobName}} is {{jobStatus}}'
 
   fields:
-    - title: "Job Steps"
+    - title: 'Job Steps'
       value: "{{#each jobSteps}}{{icon this.outcome}} {{@key}}\n{{/each}}"
       short: false
-    - title: "Job Matrix"
+    - title: 'Job Matrix'
       value: "{{#each jobMatrix}}{{@key}}: {{this}}\n{{/each}}"
       short: false
-    - title: "Allure Report"
-      value: "<{{env.ALLURE_REPORT_URL}}|View Report>"
+    - title: 'Allure Report'
+      value: '<{{env.ALLURE_REPORT_URL}}|View Report>'
       short: false
 
-  footer: "<{{repositoryUrl}}|{{repositoryName}}> {{workflow}} #{{runNumber}}|Allure report: <{{env.ALLURE_REPORT_URL}}|View Report>"
+  footer: 'For detailed results, view the <{{env.ALLURE_REPORT_URL}}|Allure Report>'
+  footer_icon: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+  actions:
+    - type: button
+      text: 'View Workflow'
+      url: '{{workflowRunUrl}}'
+    - type: button
+      text: 'View Allure Report'
+      url: '{{env.ALLURE_REPORT_URL}}'
 
   colors:
-    success: "#5DADE2"
-    failure: "#884EA0"
-    cancelled: "#A569BD"
-    default: "#7D3C98"
+    success: '#5DADE2'
+    failure: '#884EA0'
+    cancelled: '#A569BD'
+    default: '#7D3C98'
