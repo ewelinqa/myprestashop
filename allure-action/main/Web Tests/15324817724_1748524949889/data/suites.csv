@@ -1,0 +1,8 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","2600","Check the Home Page title","chromium","Thu May 29 13:22:08 UTC 2025","passed","Thu May 29 13:22:11 UTC 2025","","smokeTests/checkTitles.spec.ts","",""
+"","3019","Check the Contact Us Page title","chromium","Thu May 29 13:22:11 UTC 2025","passed","Thu May 29 13:22:14 UTC 2025","","smokeTests/checkTitles.spec.ts","",""
+"","2644","Check the Home Page title","chromium","Thu May 29 13:22:19 UTC 2025","passed","Thu May 29 13:22:22 UTC 2025","","web/smokeTests/checkTitles.spec.ts","",""
+"","2410","Check the Contact Us Page title","chromium","Thu May 29 13:22:22 UTC 2025","passed","Thu May 29 13:22:24 UTC 2025","","web/smokeTests/checkTitles.spec.ts","",""
+"","2751","Check the Clothes Page title","chromium","Thu May 29 13:22:24 UTC 2025","passed","Thu May 29 13:22:27 UTC 2025","","web/smokeTests/checkTitles.spec.ts","",""
+"","2783","Check the Clothes Page title","chromium","Thu May 29 13:22:14 UTC 2025","passed","Thu May 29 13:22:17 UTC 2025","","smokeTests/checkTitles.spec.ts","",""
+"","2532","testName = ""Create an account - all fields."", description = ""Behavior = Positive""","chromium","Thu May 29 13:22:17 UTC 2025","passed","Thu May 29 13:22:19 UTC 2025","","web/loginTests/createAccount.spec.ts","",""
