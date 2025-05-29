@@ -26,7 +26,7 @@ jobs:
         if: always()
         run: echo "ALLURE_REPORT_URL is ${{ needs.call-common-workflow.outputs.REPORT_URL }}"
       
-      - uses: act10ns/slack@v2
+      - name: Send Slack Notification
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_WEB_TESTS }}
           GITHUB_RUN_URL: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
@@ -40,8 +40,7 @@ jobs:
            --data '{
              "username": "API Tests",
              "icon_emoji": ":pepe-scared:",
-             "text": "*API Tests Workflow completed with status*: '"$STATUS"'\n*Environment*: '${{ inputs.environment }}'\n*Brand*: '${{ inputs.brand }}'\n*Branch*: '${{ github.ref_name }}'\n*Triggered by*: '${{ github.actor }}'\n*Run details*: <'${GITHUB_RUN_URL}'|Click here>\n*Allure Report*: <'${ALLURE_REPORT_URL}'|View Allure Report>"
+             "text": "*API Tests Workflow completed with status*: '"$STATUS"'\n*Branch*: '${{ github.ref_name }}'\n*Triggered by*: '${{ github.actor }}'\n*Run details*: <'${GITHUB_RUN_URL}'|Click here>\n*Allure Report*: <'${ALLURE_REPORT_URL}'|View Allure Report>"
            }' \
            $SLACK_WEBHOOK_URL
-          config: notifications/slack.yml
         if: always()
