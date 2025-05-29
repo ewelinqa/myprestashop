@@ -31,9 +31,17 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_WEB_TESTS }}
           GITHUB_RUN_URL: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
           ALLURE_REPORT_URL: ${{ needs.call-common-workflow.outputs.REPORT_URL }}
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-          channel: '#workflows'
+        run: |
+          STATUS="Success"
+           if [ "${{ needs.call-common-workflow.result }}" != "success" ]; then
+             STATUS="Failure"
+          fi
+           curl -X POST -H 'Content-type: application/json' \
+           --data '{
+             "username": "API Tests",
+             "icon_emoji": ":pepe-scared:",
+             "text": "*API Tests Workflow completed with status*: '"$STATUS"'\n*Environment*: '${{ inputs.environment }}'\n*Brand*: '${{ inputs.brand }}'\n*Branch*: '${{ github.ref_name }}'\n*Triggered by*: '${{ github.actor }}'\n*Run details*: <'${GITHUB_RUN_URL}'|Click here>\n*Allure Report*: <'${ALLURE_REPORT_URL}'|View Allure Report>"
+           }' \
+           $SLACK_WEBHOOK_URL
           config: notifications/slack.yml
         if: always()
