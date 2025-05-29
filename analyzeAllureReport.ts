@@ -3,6 +3,7 @@ import path from 'path';
 import axios from 'axios';
 
 const ALLURE_RESULTS_PATH = path.resolve(__dirname, 'allure-results'); // Folder z raportami Allure
+console.log('OPENAI_API_KEY exists:', !!process.env.OPENAI_API_KEY);
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 // Funkcja do wysyłania zapytania do OpenAI

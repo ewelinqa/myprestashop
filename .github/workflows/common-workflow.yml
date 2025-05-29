@@ -117,6 +117,8 @@ jobs:
 
       - name: Analyze Allure Report with AI
         if: always()
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           npm install tsx --no-save
           npx tsx analyzeAllureReport.ts
